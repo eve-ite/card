@@ -1,0 +1,150 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: white;
+}
+
+.game {
+  width: 100%;
+  height: 100dvh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+}
+
+.viewport {
+  position: relative;
+
+  aspect-ratio: 16 / 9;
+  width: min(100vw, calc(100dvh * 16 / 9));
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity 0.5s ease;
+}
+
+.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.background {
+  width: 100%;
+  display: block;
+}
+
+.black {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  background: black;
+  z-index: 100;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.object {
+  position: absolute;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.object:hover {
+    transform: scale(1.02);
+    z-index: 10;
+}
+
+.table-object {
+  left: 0%;
+  top: 39%;
+  width: 61%;
+}
+
+.box {
+  left: 28%;
+  top: 31%;
+  width: 15%;
+}
+
+.usb {
+  left: 45%;
+  top: 44%;
+  width: 11%;
+}
+
+.dock {
+  left: 4.8%;
+  top: 65.8%;
+  width: 23%;
+}
+
+#terminal {
+  width: 100vw;
+  height: 100dvh;
+
+  background: black;
+  color: #ffffff;
+
+  font-family: monospace;
+  font-size: 16px;
+  padding: 20px;
+
+  overflow: hidden;
+}
+
+.terminal-line {
+  display: flex;
+  font-family: monospace;
+}
+
+#prompt {
+  white-space: pre;
+}
+
+.terminal-input {
+  background: transparent;
+  color: white;
+  border: none;
+  outline: none;
+  flex: 1;
+  caret-color: white;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+
+  padding: 0;
+  margin: 0;
+}
+
+.terminal-output {
+  height: calc(100% - 40px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  white-space:pre;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
