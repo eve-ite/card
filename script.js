@@ -1,4 +1,4 @@
-let authentication = false;
+let authentication = 0;
 let typing = false;
 let username = "";
 let password = "";
@@ -37,6 +37,33 @@ const outputs = {
     await typeLine("");
     await typeLine("");
     await typeLine("ENTER YOUR USERNAME AND PASSWORD:");
+    await typeLine("");
+  },
+  "guestMode": async () => {
+    await typeLine("");
+    await typeLine("............................................................................");
+    await typeLine("");
+    await typeLine("");
+    await typeLine("GUEST MODE SELECTED");
+    await typeLine("");
+    await typeLine("");
+    await typeLine("3 FILES FOUND:");
+    await typeLine("");
+    await typeLine("cake.txt");
+    await typeLine("hat.txt")
+    await typeLine("note.txt [LOCKED]");
+    await typeLine("");
+    await typeLine("*on a table, there is a piece of mango mousse cake accompanied by a tiger hat and a handwritten note.")
+    await typeLine("");
+    await typeLine("");
+    await typeLine("TO OPEN A FILE, TYPE ITS NAME:")
+    await typeLine("");
+  },
+  "fileInaccessible": async () => {
+    await typeLine("");
+    await typeLine("FILE NOT AVAILABLE IN GUEST MODE");
+    await typeLine("")
+    await typeLine("PLEASE TRY AGAIN:");
     await typeLine("");
   },
   "cake.txt": async () => {
@@ -260,7 +287,7 @@ async function startTerminal() {
 }
 
 async function handleCommand(input) {
-    if (!authentication) {
+    if (authentication == 0) {
       if (username === "") {
         username = input;
         await typeLine("");
@@ -270,8 +297,12 @@ async function handleCommand(input) {
       else {
         password = input;
         if (username === "mXiong" && password === "31.5") {
-          authentication = true;
+          authentication = 1;
           await outputs["passwordCorrect"]();
+        }
+        else if (username === "guest" && password === "1234") {
+          authentication = 2;
+          await outputs["guestMode"]();
         }
         else {
           username = "";
@@ -281,7 +312,10 @@ async function handleCommand(input) {
       }
     }
     else {
-      const message = outputs[input];
+      let message = outputs[input];
+      if (input === "note.txt" && authentication == 2) {
+        message = outputs["fileInaccessible"];
+      }
       if (message) {
         await message();
       } else {
@@ -292,6 +326,7 @@ async function handleCommand(input) {
         await typeLine("");
       }
     }
+
   createPrompt();
   return;
 }
